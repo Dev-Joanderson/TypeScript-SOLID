@@ -1,4 +1,4 @@
-import { CartItem } from './interfaces/cart-items';
+import { CartItem } from './interfaces/cart-item';
 
 export class ShoppingCart {
   private readonly _items: CartItem[] = [];
@@ -7,7 +7,7 @@ export class ShoppingCart {
     this._items.push(item);
   }
 
-  remove(index: number): void {
+  removeItem(index: number): void {
     this._items.splice(index, 1);
   }
 

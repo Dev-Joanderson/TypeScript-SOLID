@@ -1,5 +1,5 @@
+import { CartItem } from './interfaces/cart-item';
 import { Discount } from './discount';
-import { CartItem } from './interfaces/cart-items';
 
 export class ShoppingCart {
   private readonly _items: CartItem[] = [];
@@ -10,7 +10,7 @@ export class ShoppingCart {
     this._items.push(item);
   }
 
-  remove(index: number): void {
+  removeItem(index: number): void {
     this._items.splice(index, 1);
   }
 
@@ -23,6 +23,7 @@ export class ShoppingCart {
       .reduce((total, next) => total + next.price, 0)
       .toFixed(2);
   }
+
   totalWithDicount(): number {
     return this.discount.calculate(this.total());
   }

@@ -1,15 +1,15 @@
 type CartItem = { name: string; price: number };
-type orderStatus = 'open' | 'closed';
+type OrderStatus = 'open' | 'closed';
 
 export class ShoppingCartLegacy {
   private readonly _items: CartItem[] = [];
-  private _orderStatus: orderStatus = 'open';
+  private _orderStatus: OrderStatus = 'open';
 
   addItem(item: CartItem): void {
     this._items.push(item);
   }
 
-  remove(index: number): void {
+  removeItem(index: number): void {
     this._items.splice(index, 1);
   }
 
@@ -17,22 +17,24 @@ export class ShoppingCartLegacy {
     return this._items;
   }
 
-  get orderStatus(): orderStatus {
+  get orderStatus(): OrderStatus {
     return this._orderStatus;
   }
+
   total(): number {
     return +this._items
       .reduce((total, next) => total + next.price, 0)
       .toFixed(2);
   }
+
   checkout(): void {
     if (this.isEmpty()) {
-      console.log('Checkout');
+      console.log('Seu carrinho está vazio');
       return;
     }
 
     this._orderStatus = 'closed';
-    this.senMessage('Seu pedido  foi recebido');
+    this.sendMessage(`Seu pedido com total de ${this.total()} foi recebido.`);
     this.saveOrder();
     this.clear();
   }
@@ -41,12 +43,14 @@ export class ShoppingCartLegacy {
     return this._items.length === 0;
   }
 
-  senMessage(msg: string): void {
-    console.log('Messagem enviada:', msg);
+  sendMessage(msg: string): void {
+    console.log('Mensagem enviada:', msg);
   }
+
   saveOrder(): void {
-    console.log('Salvo com sucesso...');
+    console.log('Pedido salvo com sucesso...');
   }
+
   clear(): void {
     console.log('Carrinho de compras foi limpo...');
     this._items.length = 0;
@@ -54,11 +58,12 @@ export class ShoppingCartLegacy {
 }
 
 const shoppingCart = new ShoppingCartLegacy();
-shoppingCart.addItem({ name: 'Camisa', price: 49.9 });
-shoppingCart.addItem({ name: 'blase', price: 25.9 });
-shoppingCart.addItem({ name: 'calça', price: 8.933 });
+shoppingCart.addItem({ name: 'Camiseta', price: 49.91 });
+shoppingCart.addItem({ name: 'Caderno', price: 9.9123 });
+shoppingCart.addItem({ name: 'Lápis', price: 1.59 });
 
 console.log(shoppingCart.items);
 console.log(shoppingCart.total());
+console.log(shoppingCart.orderStatus);
 shoppingCart.checkout();
 console.log(shoppingCart.orderStatus);

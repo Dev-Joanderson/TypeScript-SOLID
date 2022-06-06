@@ -1,24 +1,37 @@
-import { TenPercentDiscount } from './classes/discount';
-import { Order } from './classes/order';
-import { Product } from './classes/products';
+/*
+Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem
+depender de abstrações.
+Dependa de abstrações, não de implementações.
+Abstrações não devem depender de detalhes. Detalhes devem depender
+de abstrações.
+
+Classes de baixo nível são classes que executam tarefas (os detalhes)
+Classes de alto nível são classes que gerenciam as classes de baixo nível.
+*/
 import { ShoppingCart } from './classes/shopping-cart';
+import { Order } from './classes/order';
 import { Messaging } from './services/messaging';
 import { Persistency } from './services/persistency';
-import { IndividualCustomer, EnterpriseCustomer } from './classes/custumer';
+import { Product } from './classes/product';
+import { NoDiscount } from './classes/discount';
+import { EnterpriseCustomer } from './classes/customer';
 
-const tenPercentDiscount = new TenPercentDiscount();
-const shoppingCart = new ShoppingCart(tenPercentDiscount);
+// const fiftyPercentDiscount = new FiftyPercentDiscount();
+// const tenPercentDiscount = new TenPercentDiscount();
+const noDiscount = new NoDiscount();
+const shoppingCart = new ShoppingCart(noDiscount);
 const messaging = new Messaging();
 const persistency = new Persistency();
-const individualCustomer = new IndividualCustomer(
-  'Luiz',
-  'trajano',
-  '111.111.111-11',
-);
+// const individualCustomer = new IndividualCustomer(
+//   'Luiz',
+//   'Miranda',
+//   '111.111.111-11',
+// );
 const enterpriseCustomer = new EnterpriseCustomer(
-  'joandderson fffffff',
-  '111.111.111-113333333333',
+  'Empresa Gigante',
+  '2222222222222222',
 );
+
 const order = new Order(
   shoppingCart,
   messaging,
@@ -26,9 +39,9 @@ const order = new Order(
   enterpriseCustomer,
 );
 
-shoppingCart.addItem(new Product('Camisa', 49.99));
-shoppingCart.addItem(new Product('Blaser', 30.5));
-shoppingCart.addItem(new Product('Calça', 119.9));
+shoppingCart.addItem(new Product('Camiseta', 49.91));
+shoppingCart.addItem(new Product('Caderno', 9.9123));
+shoppingCart.addItem(new Product('Lápis', 1.59));
 
 console.log(shoppingCart.items);
 console.log(shoppingCart.total());

@@ -1,7 +1,8 @@
+import { CartItem } from './interfaces/cart-item';
 import { Discount } from './discount';
-import { CartItem } from './interfaces/cart-items';
+import { ShoppingCartProtocol } from './interfaces/shopping-cart-protocol';
 
-export class ShoppingCart {
+export class ShoppingCart implements ShoppingCartProtocol {
   private readonly _items: CartItem[] = [];
 
   constructor(private readonly discount: Discount) {}
@@ -10,7 +11,7 @@ export class ShoppingCart {
     this._items.push(item);
   }
 
-  remove(index: number): void {
+  removeItem(index: number): void {
     this._items.splice(index, 1);
   }
 
@@ -23,6 +24,7 @@ export class ShoppingCart {
       .reduce((total, next) => total + next.price, 0)
       .toFixed(2);
   }
+
   totalWithDicount(): number {
     return this.discount.calculate(this.total());
   }

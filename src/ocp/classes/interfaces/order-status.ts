@@ -1,1 +1,1 @@
-export type orderStatus = 'open' | 'closed';
+export type OrderStatus = 'open' | 'closed';
